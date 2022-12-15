@@ -1,0 +1,37 @@
+.content {
+    color:green;
+    display: flex;
+  margin-top: 2rem;
+}
+
+.card {
+ border-radius: 10px; /* Радиус скругления */
+    border: 3px solid green; /* Параметры рамки */
+    box-shadow: 0 0 7px #666; /* Параметры тени */
+    max-width: 200px;
+    margin-left: 30px;
+}
+.chosen{
+    color:red;
+}
+
+.cards{
+    display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+    position: absolute;
+    margin-left: 250px;
+}
+
+.lists fieldset {
+  margin-bottom: 8px;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+}
+.lists {
+  min-width: 16rem;
+  margin-top: -1px;
+  position: sticky;
+  height: 100%;
+  top: 15px;
+}

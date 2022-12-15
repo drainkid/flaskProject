@@ -1,0 +1,74 @@
+ /* меню страниц */
+.menu {
+ background-color: #f1f1f1;
+ box-shadow: 4px 5px 10px rgba(0, 0, 0, 0.4);
+ width: 100%;
+     margin: 1em 0;
+}
+/*Теперь уберем маркеры со списка и произведем выравнивание его элементов в одну
+линию*/
+.menu li {
+ display: inline-block;
+ vertical-align: top;
+ padding: 10px;
+ color: #6f6d6d;
+        position: sticky;
+ top: 0;
+}
+.menu a {
+ text-decoration: none; /* Убирает подчеркивание для ссылок */
+ color: #6f6d6d;
+ }
+.menu li:hover {
+ background-color: #f87777;
+ cursor: pointer;
+ color: #f8f8f8;
+}
+.menu ul {
+ padding: 0px;
+}
+.active{
+ background-color: #f87777;
+ color: #f8f8f8;
+}
+.active a:visited{
+ color: #f8f8f8;
+}
+.menu a:hover{
+ color: #f8f8f8;
+}
+.block {
+ padding: 10px 20px;
+}
+.form-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid grey;
+}
+
+th, td {
+  padding: 8px;
+}
+
+.table-wrapper {
+  margin: 6px;
+}
+
+
+tr:nth-child(2n) {
+  background-color: rgb(242, 242, 242);
+}

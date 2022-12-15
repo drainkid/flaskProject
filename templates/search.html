@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% macro render_filters(name, category, selected, len) %}
+    {% set n = len(category) %}
+    <fieldset>
+        <legend>{{ name }}</legend>
+        {% for i in range(n) %}
+            <div class="checkbox-wrapper">
+                {% set id_r = category.loc[i, category.columns[0]] %}
+                <input type="checkbox" name={{ category.columns[0] }} value={{ category.loc[i, category.columns[0]] }}
+                        {% if id_r in selected %}
+                            checked
+                        {% endif %}
+                >
+                <label>{{ category.loc[i, category.columns[1]] }}
+                    ({{ category.loc[i, category.columns[2]] }})</label>
+            </div>
+        {% endfor %}
+    </fieldset>
+{% endmacro %}
+
+{% macro render_cards(card, len) %}
+    {% set n = len(card) %}
+    {% for i in range(n) %}
+        <div class="card">
+            {% for name in card.dtypes.index %}
+                {% if name != 'ID' %}
+                    <p>{{ name }}: <b>{{ card.loc[i, name] }}</b></p>
+                {% endif %}
+            {% endfor %}
+            <div class="button-wrapper">
+                <form action="{{ url_for('index') }}" method="get">
+                    <input type="submit" value="Выбрать"
+                            {% if card.loc[i, 'Количество'] == 0 %}
+                           disabled
+                            {% endif %}
+                    >
+                    <label>
+                        <input hidden type="text" name="book" value="{{ card.loc[i, 'ID'] }}">
+                    </label>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_selected(relation, sel, name, len) %}
+    {% if len(sel) != 0 %}
+        <p>&nbsp;{{ name }}:
+            {% set n = len(relation) %}
+            {% for i in range(n) %}
+                {% set id_r = relation.loc[i, relation.columns[0]] %}
+                {% if id_r in sel %}
+                    {% if id_r == sel[-1] %}
+                        {{ relation.loc[i, relation.columns[1]] }}.
+                    {% else %}
+                        {{ relation.loc[i, relation.columns[1]] }},
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </p>
+    {% endif %}
+{% endmacro %}
+
+
+    <meta charset="UTF-8">
+    <title>Поиск</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+</head>
+<body>
+<div class=menu>
+    <ul>
+        <li class=active><a href="/">Поиск книг</a></li>
+    </ul>
+</div>
+<div class="content">
+    <div class="lists">
+        <form action="" method="post">
+            {{ render_filters('Жанры', genres, sel_genres, len) }}
+            {{ render_filters('Авторы', authors, sel_authors, len) }}
+            {{ render_filters('Издательства', publishers, sel_publishers, len) }}
+            <br>
+            <input type="submit" value="Найти">
+            <input type="submit" name="clear" value="Очистить">
+        </form>
+    </div>
+    <div class="result">
+        <form action="{{ url_for('index') }}" method="get">
+            <input type="button" onclick="window.location='{{ url_for('index') }}'" value="Не выбирать книгу">
+        </form>
+        <div class="chosen">
+            {{ render_selected(genres, sel_genres, 'Жанры', len) }}
+            {{ render_selected(authors, sel_authors, 'Авторы', len) }}
+            {{ render_selected(publishers, sel_publishers, 'Издательства', len) }}
+        </div>
+        <div class="cards">
+            {{render_cards(card, len) }}
+        </div>
+    </div>
+</div>
+</body>
+</html>
